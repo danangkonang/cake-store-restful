@@ -17,18 +17,18 @@ services:
     volumes:
       - mysql:/var/lib/mysql
     container_name: db
-  # app:
-  #   image: cake:latest
-  #   networks:
-  #     - net-cake
-  #   ports:
-  #     - "9000:9000"
-  #   environment:
-  #     - DB_HOST=mysql
-  #     - APP_MODE=production
-  #   depends_on:
-  #     - mysql
-  #   container_name: app
+  app:
+    image: cake:latest
+    networks:
+      - net-cake
+    ports:
+      - "9000:9000"
+    environment:
+      - DB_HOST=mysql
+      - APP_MODE=production
+    depends_on:
+      - mysql
+    container_name: app
 networks:
   net-cake:
 volumes:

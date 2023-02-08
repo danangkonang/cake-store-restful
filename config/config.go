@@ -6,8 +6,9 @@ import (
 	"os"
 	"time"
 
-	// _ "time/tzdata"
+	_ "time/tzdata"
 
+	"github.com/danangkonang/cake-store-restful/helper"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -27,6 +28,7 @@ func Connection() *DB {
 	)
 	db, err := sql.Open(os.Getenv("DB_DRIVER"), connection)
 	if err != nil {
+		helper.LoggerError("connection", err.Error())
 		panic(err)
 	}
 	db.SetMaxOpenConns(50)

@@ -27,7 +27,8 @@ func (c *cakeController) SaveCake(w http.ResponseWriter, r *http.Request) {
 	var p model.ProductPostRequest
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("json", err.Error())
+		helper.MakeRespon(w, 400, "invalid json format", nil)
 		return
 	}
 	validationErrors, err := helper.Validation(p)
@@ -38,7 +39,8 @@ func (c *cakeController) SaveCake(w http.ResponseWriter, r *http.Request) {
 	p.CreatedAt = time.Now()
 
 	if err := c.service.SaveCake(&p); err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("SaveCake", err.Error())
+		helper.MakeRespon(w, 400, "internal server error", nil)
 		return
 	}
 	helper.MakeRespon(w, 200, "success", nil)
@@ -47,7 +49,8 @@ func (c *cakeController) SaveCake(w http.ResponseWriter, r *http.Request) {
 func (c *cakeController) FindCakes(w http.ResponseWriter, r *http.Request) {
 	res, err := c.service.FindCakes()
 	if err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("FindCakes", err.Error())
+		helper.MakeRespon(w, 400, "internal server error", nil)
 		return
 	}
 	helper.MakeRespon(w, 200, "success", res)
@@ -62,7 +65,8 @@ func (c *cakeController) FindCakeById(w http.ResponseWriter, r *http.Request) {
 		helper.MakeRespon(w, 400, "cake not found", nil)
 		return
 	case err != nil:
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("FindCakeById", err.Error())
+		helper.MakeRespon(w, 400, "internal server error", nil)
 		return
 	}
 	helper.MakeRespon(w, 200, "success", res)
@@ -72,7 +76,8 @@ func (c *cakeController) UpdateCake(w http.ResponseWriter, r *http.Request) {
 	var p model.ProductUpdateRequest
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("json", err.Error())
+		helper.MakeRespon(w, 400, "invalid json format", nil)
 		return
 	}
 	defer r.Body.Close()
@@ -82,18 +87,10 @@ func (c *cakeController) UpdateCake(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p.UpdatedAt = time.Now()
-	// res, err := c.service.FindCakeById(p.Id)
-	// switch {
-	// case err == sql.ErrNoRows:
-	// 	helper.MakeRespon(w, 400, "cake not found", nil)
-	// 	return
-	// case err != nil:
-	// 	helper.MakeRespon(w, 400, err.Error(), nil)
-	// 	return
-	// }
 
 	if err := c.service.UpdateCake(&p); err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("UpdateCake", err.Error())
+		helper.MakeRespon(w, 400, "internal server error", nil)
 		return
 	}
 	helper.MakeRespon(w, 200, "success", nil)
@@ -103,7 +100,8 @@ func (c *cakeController) DeleteCake(w http.ResponseWriter, r *http.Request) {
 	var p model.ProductDeleteRequest
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("json", err.Error())
+		helper.MakeRespon(w, 400, "invalid json format", nil)
 		return
 	}
 	defer r.Body.Close()
@@ -112,18 +110,10 @@ func (c *cakeController) DeleteCake(w http.ResponseWriter, r *http.Request) {
 		helper.MakeRespon(w, 400, err.Error(), validationErrors)
 		return
 	}
-	// res, err := c.service.FindCakeById(p.Id)
-	// switch {
-	// case err == sql.ErrNoRows:
-	// 	helper.MakeRespon(w, 400, "cake not found", nil)
-	// 	return
-	// case err != nil:
-	// 	helper.MakeRespon(w, 400, err.Error(), nil)
-	// 	return
-	// }
 
 	if err := c.service.DeleteCake(&p); err != nil {
-		helper.MakeRespon(w, 400, err.Error(), nil)
+		helper.LoggerError("DeleteCake", err.Error())
+		helper.MakeRespon(w, 400, "internal server error", nil)
 		return
 	}
 	helper.MakeRespon(w, 200, "success", nil)

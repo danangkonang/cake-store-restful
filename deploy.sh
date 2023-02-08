@@ -1,13 +1,12 @@
 go test -v ./...
-slep 2
+sleep 2
 
 docker build -t cake .
-slep 2
+sleep 2
 
 docker-compose up -d
-slep 2
+sleep 10
 
-make up
-slep 2
+docker exec app sh -c "./goql up migration --dir schema/migration --db mysql://danang:danang@tcp\(mysql:3306\)/db-cake?parseTime=true&loc=Asia%2FJakarta"
 
 exit 1

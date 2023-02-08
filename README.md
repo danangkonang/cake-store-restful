@@ -1,13 +1,11 @@
 # Running App
 
-## 1. Download
+## 1. Download And Deploy
 ```bash
-git clone
+git clone https://github.com/danangkonang/cake-store-restful.git
 
-cd 
-```
-## 2. Deploy
-```bash
+cd cake-store-restful
+
 # linux
 ./build.sh
 
