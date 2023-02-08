@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - net-cake
+    environment:
+      - MYSQL_ROOT_PASSWORD=danang
+      - MYSQL_USER=danang
+      - MYSQL_PASSWORD=danang
+      - MYSQL_DATABASE=db-cake
+      - TZ='Asia/Jakarta'
+    volumes:
+      - mysql:/var/lib/mysql
+    container_name: db
+  # app:
+  #   image: cake:latest
+  #   networks:
+  #     - net-cake
+  #   ports:
+  #     - "9000:9000"
+  #   environment:
+  #     - DB_HOST=mysql
+  #     - APP_MODE=production
+  #   depends_on:
+  #     - mysql
+  #   container_name: app
+networks:
+  net-cake:
+volumes:
+  mysql:
