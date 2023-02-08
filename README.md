@@ -1,4 +1,8 @@
-# Running App
+# Cake Store Restful
+
+Halo there :v: :smile:
+
+# How To Running App?
 
 ## 1. Download And Deploy
 ```bash
