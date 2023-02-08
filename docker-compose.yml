@@ -30,8 +30,8 @@ services:
       - mysql
     container_name: app
     volumes:
-      - logs/error:logs/error
-      - logs/access:logs/access
+      - ./logs/error:/app/logs/error
+      - ./logs/access:/app/logs/access
 networks:
   net-cake:
 volumes:

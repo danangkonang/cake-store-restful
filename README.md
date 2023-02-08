@@ -10,6 +10,10 @@ cd cake-store-restful
 ./build.sh
 
 # windows/macos/linux
+go clean -testcache
+
+go test -v ./...
+
 docker build -t cake .
 
 docker-compose up -d
